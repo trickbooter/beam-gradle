@@ -10,22 +10,17 @@ repos += [
         // cloudera:"https://repository.cloudera.com/artifactory/cloudera-repos/"
 ]
 versions += [
-        scala     : "2.11",
-        scalaPatch: "1",
-        spark     : "2.0.1"
+        scala     : "2.12",
+        scalaPatch: "4",
+        beam     : "2.2.0"
 ]
 libs += [
-        commonsIO        : "commons-io:commons-io:2.4",
-        commonsLang      : "org.apache.commons:commons-lang3:3.4",
-        guava            : "com.google.guava:guava:18.0",
-        jodaTime         : "joda-time:joda-time:2.4",
-        jUnit            : "junit:junit:4.12",
         scala            : "org.scala-lang:scala-library:$versions.scala.$versions.scalaPatch",
-        scalaCheck       : "org.scalacheck:scalacheck_$versions.scala:1.12.1",
-        scalaTest        : "org.scalatest:scalatest_$versions.scala:2.2.6",
-        spark            : "org.apache.spark:spark-core_$versions.scala:$versions.spark",
-        sparkSql         : "org.apache.spark:spark-sql_$versions.scala:$versions.spark",
-        sparkStreaming   : "org.apache.spark:spark-streaming_$versions.scala:$versions.spark"
+        beam             : "org.apache.beam:beam-sdks-java-core:$versions.beam",
+        beamDirect       : "org.apache.beam:beam-runners-direct-java:$versions.beam",
+        slf4j            : "org.slf4j:slf4j-api:1.7.25",
+        slf4jlog4        : "org.slf4j:slf4j-log4j12:1.7.25",
+        jUnit            : "junit:junit:4.12"
 
 ]
 
@@ -38,19 +33,9 @@ repositories {
 }
 
 dependencies {
-    compile libs.commonsIO,
-            libs.commonsLang,
-            libs.guava,
-            libs.jodaTime,
-            libs.scala
+    compile libs.scala,
+            libs.beam,
+            libs.beamDirect
 
-    compileOnly libs.spark,
-            libs.sparkSql,
-            libs.sparkStreaming
-
-    testCompile libs.jUnit,
-            libs.scalaTest,
-            libs.spark,
-            libs.sparkSql,
-            libs.sparkStreaming
+    testCompile libs.jUnit
 }

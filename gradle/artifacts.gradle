@@ -1,15 +1,3 @@
-/**
- * Build the shadowjar by merging all upstream compile deps
- * Shows the com.google namespace to avoid a conflict with the
- * Spark-Cassandra connector if in use.
- * Merge service files to capture any JDBC driver files
- */
-shadowJar {
-    classifier "shadow"
-    // Hadoop uses Guava 14.x. We need to relocate Guava in order to let spark-cassandra use 16.x Guava
-    relocate 'com.google', 'shadow.com.google'
-    mergeServiceFiles()
-}
 
 /**
  * Rewrite the jar manifest
@@ -18,20 +6,12 @@ shadowJar {
 jar {
     manifest {
         attributes(
-                "Implementation-Title": "Spark-Gradle",
-                "Implementation-Descritpion": "A Spark template project built using Gradle",
+                "Implementation-Title": "Beam-Gradle",
+                "Implementation-Descritpion": "A Beam template project built using Gradle",
                 "Implementation-Version": getCheckedOutGitCommitHash(),
                 "Build-Timestamp": (int) (new Date().getTime() / 1000)
         )
     }
-}
-
-/**
- * Build a tar file that includes the jar and anything else you want to package
- * */
-task distribution(type: Tar, dependsOn: shadowJar){
-    from shadowJar.outputs.files
-    from('src/conf') { into('conf') }
 }
 
 /**
