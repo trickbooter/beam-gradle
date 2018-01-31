@@ -1,0 +1,56 @@
+ext {
+    repos = [:]
+    versions = [:]
+    libs = [:]
+}
+
+repos += [
+        // Add aliased repo's here
+        // alias: URL
+        // cloudera:"https://repository.cloudera.com/artifactory/cloudera-repos/"
+]
+versions += [
+        scala     : "2.11",
+        scalaPatch: "1",
+        spark     : "2.0.1"
+]
+libs += [
+        commonsIO        : "commons-io:commons-io:2.4",
+        commonsLang      : "org.apache.commons:commons-lang3:3.4",
+        guava            : "com.google.guava:guava:18.0",
+        jodaTime         : "joda-time:joda-time:2.4",
+        jUnit            : "junit:junit:4.12",
+        scala            : "org.scala-lang:scala-library:$versions.scala.$versions.scalaPatch",
+        scalaCheck       : "org.scalacheck:scalacheck_$versions.scala:1.12.1",
+        scalaTest        : "org.scalatest:scalatest_$versions.scala:2.2.6",
+        spark            : "org.apache.spark:spark-core_$versions.scala:$versions.spark",
+        sparkSql         : "org.apache.spark:spark-sql_$versions.scala:$versions.spark",
+        sparkStreaming   : "org.apache.spark:spark-streaming_$versions.scala:$versions.spark"
+
+]
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url "https://oss.sonatype.org/content/groups/public"
+    }
+}
+
+dependencies {
+    compile libs.commonsIO,
+            libs.commonsLang,
+            libs.guava,
+            libs.jodaTime,
+            libs.scala
+
+    compileOnly libs.spark,
+            libs.sparkSql,
+            libs.sparkStreaming
+
+    testCompile libs.jUnit,
+            libs.scalaTest,
+            libs.spark,
+            libs.sparkSql,
+            libs.sparkStreaming
+}
