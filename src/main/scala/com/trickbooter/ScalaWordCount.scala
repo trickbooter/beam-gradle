@@ -3,16 +3,16 @@ package com.trickbooter
 import org.apache.beam.sdk.Pipeline
 import org.apache.beam.sdk.io.TextIO
 import org.apache.beam.sdk.options.{Description, PipelineOptions, PipelineOptionsFactory}
-import org.apache.beam.sdk.transforms._
 import org.apache.beam.sdk.transforms.DoFn.ProcessElement
-import org.apache.beam.sdk.values.{KV, TypeDescriptors}
+import org.apache.beam.sdk.transforms._
+import org.apache.beam.sdk.values.KV
 import org.slf4j.LoggerFactory
 
-object WordCount {
+object ScalaWordCount {
 
   val animals = "Echidna Echidna Koala Wombat Marmot Quokka Kangaroo Dingo Numbat Emu Wallaby CaneToad Bilby Possum Cassowary Kookaburra Platypus Bandicoot Cockatoo Antechinus"
 
-  private val log = LoggerFactory.getLogger(WordCount.getClass)
+  private val log = LoggerFactory.getLogger(ScalaWordCount.getClass)
 
   trait Options extends PipelineOptions {
     @Description("Output path")
@@ -35,12 +35,12 @@ object WordCount {
   }
 
   def boundedFlow(args: Array[String]): Pipeline = {
-    val options = PipelineOptionsFactory.fromArgs(args: _ *).withValidation.as(classOf[WordCount.Options])
+    val options = PipelineOptionsFactory.fromArgs(args: _ *).withValidation.as(classOf[ScalaWordCount.Options])
     val p = Pipeline.create(options)
 
     // prepare flow
     val a = p
-      .apply(Create.of((0 to 100).foldLeft("")((a, b) => a + " " + animals)))
+      .apply(Create.of((0 to 99).foldLeft("")((a, b) => a + " " + animals)))
       .apply("SplitLines", ParDo.of(extractWords))
       .apply("CountWords", Count.perElement())
       .apply("FormatResults", MapElements.via(formatResults))

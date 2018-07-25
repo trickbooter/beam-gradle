@@ -12,7 +12,7 @@ repos += [
 versions += [
         scala     : "2.12",
         scalaPatch: "4",
-        beam     : "2.2.0"
+        beam     : "2.5.0"
 ]
 libs += [
         scala            : "org.scala-lang:scala-library:$versions.scala.$versions.scalaPatch",

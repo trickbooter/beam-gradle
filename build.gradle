@@ -1,6 +1,7 @@
 buildscript { apply from: file('gradle/buildscript.gradle'), to: buildscript }
 
 plugins {
+    id 'application' // for gradle application support
     id 'groovy' // for groovy support in Gradle
     id 'java' // for Java build support
     id 'scala' // for Scala build support
@@ -35,7 +36,7 @@ task checkJavaVersion << {
  * Allows us to use the gradle wrapper, which is vital in continuous integration
  */
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.5'
+    gradleVersion = '4.9'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 

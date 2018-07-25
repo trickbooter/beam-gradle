@@ -1,4 +1,4 @@
 
-A Spark demo application with Gradle build
+An Apache Beam template with Gradle build
 
 
